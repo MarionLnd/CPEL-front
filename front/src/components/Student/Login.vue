@@ -1,29 +1,38 @@
 <template>
   <div class="container">
-    <div class="card" style="float: left; margin-right: 10px">
-      <div class="container">
-        <form>
-          <label>Numéro Professeur</label>
-          <input type="text" id="professor" v-model="usernameProf"/>
-          <label>password</label>
-          <input type="password" v-model="passwordProf"/>
-          <button @click.stop.prevent="submit()">Submit</button>
-        </form>
-        <h1> {{ msg }}</h1>
+      <h1 class="text-dark">
+          CPEL Application
+      </h1>
+      <div class="row">
+          <div class="card col mr-5" style="float: left; margin-right: 10px">
+              <div class="container">
+                  <form>
+                      <label>Numéro Professeur</label>
+                      <input type="text" id="professor" v-model="usernameProf"/>
+                      <label>password</label>
+                      <input type="password" v-model="passwordProf"/>
+                      <button @click.stop.prevent="submit()">Submit</button>
+                  </form>
+                  <h1> {{ msg }}</h1>
+              </div>
+          </div>
+          <div class="card col ml-5" style="float: right">
+              <div class="container">
+                  <form>
+                      <label>Numéro Etudiant</label>
+                      <input type="text" id="student" v-model="usernameStudent"/>
+                      <label>password</label>
+                      <input type="password" id="studentPassword" v-model="passwordStudent"/>
+                      <button @click.stop.prevent="submit()">Submit</button>
+                  </form>
+                  <h1> {{ msg }}</h1>
+              </div>
+          </div>
       </div>
-    </div>
-    <div class="card" style="float: right">
-      <div class="container">
-        <form>
-          <label>Numéro Etudiant</label>
-          <input type="text" id="student" v-model="usernameStudent"/>
-          <label>password</label>
-          <input type="password" id="studentPassword" v-model="passwordStudent"/>
-          <button @click.stop.prevent="submit()">Submit</button>
-        </form>
-        <h1> {{ msg }}</h1>
+
+      <div class="mt-2">
+          <p>Vous n'êtes pas encore inscrit sur la plateforme ? <router-link to="/inscription">Inscrivez-vous ici</router-link></p>
       </div>
-    </div>
   </div>
 </template>
 

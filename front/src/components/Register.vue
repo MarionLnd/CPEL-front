@@ -91,7 +91,7 @@
                         response => {
                             this.formData.error = false
                             console.log(response)
-                            //this.$router.push(this.$route.query.redirect || '/professeur/')
+                            this.$router.push(this.$route.query.redirect || '/login')
                         }
                    ).catch(error => {
                        console.log(error)
