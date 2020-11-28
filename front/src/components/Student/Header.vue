@@ -19,7 +19,7 @@
         </li>
 
         <li class="nav-item">
-          <router-link class="nav-link" to="/login">Déconnexion</router-link>
+          <router-link class="nav-link" to="/login" @click="logout">Déconnexion</router-link>
         </li>
        
       
@@ -33,7 +33,15 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
-  }
+  },
+    methods: {
+        logout() {
+            this.$cookies.remove("idProfessor")
+            this.$cookies.remove("type")
+            this.$cookies.remove("idStudent")
+            this.$cookies.remove("username")
+        }
+    }
 }
 </script>
 
