@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div v-else>
-                <p><u>Ce TD n'a pas encore d'exercices.</u></p>s
+                <p><u>Ce TD n'a pas encore d'exercices.</u></p>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
             }
         },
         created() {
-            axios.get("https://cpel.herokuapp.com/api/td/" + this.id).then(response => {
+            axios.get("https://cpel.herokuapp.com/api/tds/" + this.id).then(response => {
                 this.td = response.data
             })
         },

@@ -109,7 +109,6 @@
     }
 </script>
 
-<style src="../../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped>
     /* Enter and leave animations can use different */
     /* durations and timing functions.              */

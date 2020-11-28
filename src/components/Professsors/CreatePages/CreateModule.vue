@@ -22,9 +22,15 @@
                     <input type="text" id="name" class="form-control w-100" v-model.lazy="formData.name">
                 </div>
 
+                <!-- For PDF File
                 <div class="form-group">
-                    <label for="courseFile">Parcourir les fichiers</label>
-                    <input type="file" class="form-control-file" id="courseFile" ref="file" v-on:change="handleFileUpload">
+                    <label for="file">Parcourir les fichiers</label>
+                    <input type="file" accept="application/pdf" class="form-control-file" id="file" ref="file" v-on:change="handleFileUpload">
+                </div>-->
+
+                <div class="form-group">
+                    <label for="course">Contenu du cours</label>
+                    <input type="text" class="form-control" id="course" v-model="formData.content">
                 </div>
 
                 <div class="form-group">
@@ -53,7 +59,7 @@ export default {
             formData: {
                 idModule: '',
                 name: '',
-                file: '',
+                content: '',
                 groupSelected: {},
                 submitted: false,
                 error: false
@@ -63,33 +69,25 @@ export default {
     methods: {
         sendForm() {
             this.formData.submitted = true
-            console.log("submit")
-            console.log(this.formData.submitted)
-            console.log(this.formData.groupSelected)
 
             let formData2 = new FormData()
             formData2.append('file', this.formData.file)
 
             let moduleCreated = {
                 name: this.formData.name,
-                content: formData2.append('file', this.formData.file),
+                content: this.content,
                 groups: [this.formData.groupSelected._id],
                 idProfessor: "5fac3b2293c9159d939dd32e",
-                nbExercises: 0
+                tds: []
             }
             console.log(moduleCreated)
-            console.log(formData2)
+            console.log(this.$refs.file)
             // Ajouter le nouveau module a la base
-            axios.post("https://cpel.herokuapp.com/api/module/",
-                moduleCreated,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-                ).then(() => {
+            axios.post("https://cpel.herokuapp.com/api/module/", moduleCreated)
+                .then(() => {
+                console.log("good")
                     // redirect
-                    //this.$router.push(this.$route.query.redirect || '/professeur')
+                    this.$router.push(this.$route.query.redirect || '/professeur')
                 })
                 .catch(error => {
                     console.log(error)
@@ -97,12 +95,12 @@ export default {
                 })
             this.formData.submitted = false
         },
-        handleFileUpload() {
-            this.formData.file = this.$refs.file.files[0]
-        }
+        /*handleFileUpload() {
+            this.formData.file = this.$refs.file.files[0].name
+        }*/
     },
     created() {
-        axios.get("https://cpel.herokuapp.com/api/group/").then(response => {
+        axios.get("https://cpel.herokuapp.com/api/groups/").then(response => {
             this.getGroups = response.data;
         })
     }

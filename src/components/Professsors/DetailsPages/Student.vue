@@ -83,13 +83,13 @@
             }
         },
         created() {
-            axios.get("https://cpel.herokuapp.com/api/student/" + this.id).then(response => {
+            axios.get("https://cpel.herokuapp.com/api/students/" + this.id).then(response => {
                 this.student = response.data
             })
-            axios.get("https://cpel.herokuapp.com/api/exercise/").then(response => {
+            axios.get("https://cpel.herokuapp.com/api/exercises/").then(response => {
                 this.exercises = response.data
             })
-            axios.get("https://cpel.herokuapp.com/api/studentRendering/").then(response => {
+            axios.get("https://cpel.herokuapp.com/api/studentRenderings/").then(response => {
                 for (let stdRender of response.data) {
                     if (stdRender.idStudent === this.id) {
                         this.studentRenderings.push(stdRender)

@@ -50,7 +50,7 @@ export default {
         }
     },
     created() {
-        axios.get("https://cpel.herokuapp.com/api/group/").then(response => {
+        axios.get("https://cpel.herokuapp.com/api/groups/").then(response => {
             this.data = response.data
         })
     },

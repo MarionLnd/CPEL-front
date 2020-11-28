@@ -3,7 +3,7 @@ import App from './App.vue'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import VueRouter from "vue-router"
-import Routes from "./js/Routes"
+import Routes from "./Routes"
 import 'skulpt/dist/skulpt.min'
 import 'skulpt/dist/skulpt-stdlib'
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"

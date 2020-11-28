@@ -55,13 +55,13 @@ export default {
         }
     },
     created() {
-        axios.get("https://cpel.herokuapp.com/api/group/" + this.id).then(response => {
+        axios.get("https://cpel.herokuapp.com/api/groups/" + this.id).then(response => {
             this.group = response.data
         });
-        axios.get("https://cpel.herokuapp.com/api/module/").then(response => {
+        axios.get("https://cpel.herokuapp.com/api/modules/").then(response => {
             this.mods = response.data
         });
-        axios.get("https://cpel.herokuapp.com/api/student/").then(response => {
+        axios.get("https://cpel.herokuapp.com/api/students/").then(response => {
             for(let student of response.data) {
                 if (student.idGroup === "") {
                     this.students.push(student)
@@ -72,14 +72,22 @@ export default {
     methods: {
         sendForm() {
             for(let student of this.formData.students) {
-                axios.put("https://cpel.herokuapp.com/api/group/" + this.id + "/" + student._id)
-                    .then(() => console.log("success update"))
-                    .catch(error => console.log(error))
+                axios.put("https://cpel.herokuapp.com/api/groups/" + this.id + "/students/" + student._id)
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
             }
             for(let mod of this.formData.modules) {
-                axios.put("https://cpel.herokuapp.com/api/group/" + this.id + "/" + mod._id)
-                    .then(() => console.log("success update"))
-                    .catch(error => console.log(error))
+                axios.put("https://cpel.herokuapp.com/api/groups/" + this.id + "/modules/" + mod._id)
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
             }
         },
     }
