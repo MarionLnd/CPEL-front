@@ -20,11 +20,8 @@
                     <div class="dropdown-menu p-1" aria-labelledby="navbarDropdown">
                         <router-link class="dropdown-item nav-link text-center" to="/admin/ajouter-professeur">Professeur</router-link>
                         <router-link class="dropdown-item nav-link text-center" to="/admin/ajouter-etudiant">Étudiant</router-link>
-                        <router-link class="dropdown-item nav-link text-center" to="/admin/ajouter-groupe">Groupe</router-link>
+                        <!--<router-link class="dropdown-item nav-link text-center" to="/admin/ajouter-groupe">Groupe</router-link>-->
                     </div>
-                </li>
-                <li class="nav-item">
-                    <router-link class="nav-link text-white" to="/admin/profil">Gérer</router-link>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" @click="logout">Déconnexion</a>

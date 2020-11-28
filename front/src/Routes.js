@@ -40,9 +40,9 @@ import AddGroup from "@/components/Admin/CreatePages/AddGroup";
 import EditProfessor from "@/components/Admin/EditPages/EditProfessor";
 import EditStudent from "@/components/Admin/EditPages/EditStudent";
 import EditGroupAdmin from "@/components/Admin/EditPages/EditGroup";
-import Professors from "@/components/Admin/DetailsPages/Professors";
-import Students from "@/components/Admin/DetailsPages/Students";
-import Groups from "@/components/Admin/DetailsPages/Groups";
+import ProfessorAdmin from "@/components/Admin/DetailsPages/Professor";
+import StudentAdmin from "@/components/Admin/DetailsPages/Student";
+import GroupAdmin from "@/components/Admin/DetailsPages/Group";
 
 export default [
     {path: '/login', component: Login },
@@ -86,12 +86,12 @@ export default [
     {path: '/admin/ajouter-professeur', component: AddProfessor },
     {path: '/admin/ajouter-etudiant', component: AddStudent },
     {path: '/admin/ajouter-groupe', component: AddGroup },
-    {path: '/admin/gerer-professeurs', component: EditProfessor },
-    {path: '/admin/gerer-etudiants', component: EditStudent },
-    {path: '/admin/gerer-groupes', component: EditGroupAdmin },
-    {path: '/admin/professeurs', component: Professors },
-    {path: '/admin/etudiants', component: Students },
-    {path: '/admin/groupes', component: Groups },
+    {path: '/admin/gerer-professeurs/:idProfessor', component: EditProfessor },
+    {path: '/admin/gerer-etudiants/:idStudent', component: EditStudent },
+    {path: '/admin/gerer-groupes/:idGroup', component: EditGroupAdmin },
+    {path: '/admin/professeur/:idProfessor', component: ProfessorAdmin },
+    {path: '/admin/etudiant/:idStudent', component: StudentAdmin },
+    {path: '/admin/groupe/:idGroup', component: GroupAdmin },
     {path: '/admin/professeur/:idProfessor', component: Dashboard },
     {path: '/admin/etudiant/:idStudent', component: Dashboard },
     {path: '/admin/groupe/:idGroup', component: Dashboard },

@@ -18,15 +18,15 @@
                 <td>{{ student.firstname }}</td>
                 <td>{{ student.email }}</td>
                 <td>
-                    <router-link class="mr-2" :to="`/professeur/groupe/${student._id}`">
+                    <router-link class="mr-2" :to="`/admin/etudiant/${student._id}`">
                         <font-awesome-icon icon="eye" size="lg" style="color: #2a4f66"/>
                     </router-link>
                     -
-                    <router-link class="ml-2" :to="`/professeur/editer-groupe/${student._id}`">
+                    <router-link class="ml-2" :to="`/admin/gerer-etudiants/${student._id}`">
                         <font-awesome-icon icon="edit" size="lg" style="color: #2a4f66"/>
                     </router-link>
                     -
-                    <font-awesome-icon icon="user-minus" size="lg" class="ml-2" style="color: #2a4f66"/>
+                    <font-awesome-icon icon="user-minus" size="lg" class="ml-2" style="color: #2a4f66" @click="deleteStudent(student._id)"/>
                 </td>
             </tr>
             </tbody>
@@ -46,11 +46,18 @@ export default {
       }
     },
     created() {
-        axios.get("https://cpel.herokuapp.com/api/student/").then(response => {
+        axios.get("https://cpel.herokuapp.com/api/students/").then(response => {
             this.students = response.data
         })
     },
     methods: {
+        deleteStudent(studentId) {
+            axios.delete("https://cpel.herokuapp.com/api/students/" + studentId)
+                .then(response => {
+                    console.log(response)
+                })
+            .catch(error => console.log(error))
+        }
     }
 }
 </script>

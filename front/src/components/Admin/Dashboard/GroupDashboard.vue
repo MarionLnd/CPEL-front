@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h3 class="text-left text-u">Gestion des étudiants</h3>
+        <h3 class="text-left text-u">Gestion des groupes</h3>
         <table class="table">
             <thead>
             <tr>
@@ -14,13 +14,13 @@
                 <td>{{ group.name }}</td>
                 <td>{{ group.students.length }}</td>
                 <td>
-                    <router-link class="mr-2" :to="`/professeur/groupe/${student._id}`">
+                    <router-link class="mr-2" :to="`/admin/groupe/${student._id}`">
                         <font-awesome-icon icon="eye" size="lg" style="color: #2a4f66" />
                     </router-link>
-                    -
-                    <router-link class="ml-2" :to="`/professeur/editer-groupe/${student._id}`">
+                    <!-- -
+                    <router-link class="ml-2" :to="`/admin/gerer-groupes/${student._id}`">
                         <font-awesome-icon icon="edit" size="lg" style="color: #2a4f66"/>
-                    </router-link>
+                    </router-link>-->
                     -
                     <font-awesome-icon icon="user-minus" size="lg" class="ml-2" style="color: #2a4f66"/>
                 </td>
@@ -31,8 +31,20 @@
 </template>
 
 <script>
+import axios from 'axios'
+
     export default {
-        name: "GroupDashboard"
+        name: "GroupDashboard",
+        data() {
+            return {
+                groups: []
+            }
+        },
+        created() {
+            axios.get("https://cpel.herokuapp.com/api/groups/").then(response => {
+                this.groups = response.data
+            })
+        }
     }
 </script>
 

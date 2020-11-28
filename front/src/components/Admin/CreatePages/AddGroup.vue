@@ -61,14 +61,14 @@ export default {
         }
     },
     created() {
-        axios.get("https://cpel.herokuapp.com/api/student/").then(response => {
+        axios.get("https://cpel.herokuapp.com/api/students/").then(response => {
             for(let student of response.data) {
                 if (student.idGroup === "") {
                     this.formData.students.push(student)
                 }
             }
         });
-        axios.get("https://cpel.herokuapp.com/api/module/").then(response => {
+        axios.get("https://cpel.herokuapp.com/api/modules/").then(response => {
             this.formData.modules = response.data
         });
     },

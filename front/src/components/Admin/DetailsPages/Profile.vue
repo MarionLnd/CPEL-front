@@ -3,7 +3,7 @@
         <h1 class="pt-3 pb-3">Profil</h1>
 
         <!-- ALERTS -->
-        <transition name="slide-fade">
+        <transition name="slide-fade" v-if="hasError || isSubmitted || hasWarning">
             <div
                 class="alert alert-dismissible"
                 :class="{'alert-success': isSubmitted, 'alert-danger': hasError, 'alert-warning': hasWarning}">
@@ -57,7 +57,7 @@
         data() {
             return {
                 id: this.$cookies.get("idProfessor"),
-                user: {},
+                professor: {},
                 newPassword: "",
                 isSubmitted: false,
                 hasError: false,
