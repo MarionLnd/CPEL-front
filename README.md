@@ -1,24 +1,29 @@
-# front
+# CPEL - front
 
-## Project setup
+Ce projet gère l'interface de notre application CPEL. Cette application fait office de plateforme interactive de cours et d'exercices pour que des professeurs puissent proposer des cours et exercices en Python à des étudiants.
+Le but premier est de pouvoir éxécuter un exercice sur le navigateur.
+
+## Installation du projet
 ```
 yarn install
+```
+ou
+
+```
+npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
 yarn serve
 ```
+Vous pourrez, après le lancement de cette commande, lancer le projet depuis l'URL http://localhost:8080/ 
 
-### Compiles and minifies for production
-```
-yarn build
-```
 
-### Lints and fixes files
-```
-yarn lint
-```
+### Développé par 
+DIEDHIOU Marieme, MOUTAOUKIL Soukayna et LUNDI Marion
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Outils utilisés
+Partie front : VueJS, Bootstrap, Skulpt.org (pour l'éxécution de code Python)
+Partie back : NodeJS, MongoDB
+Déploiement : Heroku
