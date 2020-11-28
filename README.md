@@ -25,7 +25,7 @@ Interface professeur: Username = 20192679 et mot de passe = test
 Interface étudiant: Username = 20162012 et mot de passe = admin
 Interface étudiant :
  - Username = 20200001 et mot de passe = username
-  - Username = 20200003 et mot de passe = 2020003
+ - Username = 20200003 et mot de passe = 2020003
 
 ### Développé par 
 DIEDHIOU Marieme, MOUTAOUKIL Soukayna et LUNDI Marion
