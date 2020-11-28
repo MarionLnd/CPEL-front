@@ -13,7 +13,7 @@ ou
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Lancer le projet en local
 ```
 yarn serve
 ```
