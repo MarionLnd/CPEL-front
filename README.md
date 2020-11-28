@@ -21,6 +21,7 @@ Vous pourrez, après le lancement de cette commande, lancer le projet depuis l'U
 
 ### Les comptes à utiliser pour se connecter
 Interface professeur: Username = 20192679 et mot de passe = test
+
 Interface étudiant: Username = 20162012 et mot de passe = admin
 Interface étudiant :
  - Username = 20200001 et mot de passe = username
