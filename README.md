@@ -30,6 +30,9 @@ Interface admin:
 
 Interface étudiant :
  - Username = **20200001** et mot de passe = **20200001**
+ 
+Il faut recharger la page après la connexion d'un professeur pour avoir le header (car les cookies ne sont pas automatiquement rechargés)
+ 
 
 ### Développé par 
 DIEDHIOU Marieme, MOUTAOUKIL Soukayna et LUNDI Marion
