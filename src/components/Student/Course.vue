@@ -110,29 +110,22 @@ export default {
   },
   mounted() {
        
-      axios
-          .get("https://cpel.herokuapp.com/api/professors/")
-          .then((response) => {
-           
-            response.data.forEach((prof) => {
+    
     axios.get("https://cpel.herokuapp.com/api/modules/").then((response) => {
       response.data.forEach((mod) => {
-        
-       
-
-              console.log(mod._id +"     and    " +prof.idModule)
-              if (mod._id === prof.idModule) {
-                console.log(mod)
-               console.log("test")
+          axios
+          .get("https://cpel.herokuapp.com/api/professors/"+mod.idProfessor)
+          .then((prof) => {
+     
+              
                 this.moduleData.push({
                   module: mod.name,
-                  professor: prof.lastname,
+                  professor: prof.data.lastname,
                   idmodule:mod._id,
                 });
                 
                  console.log(this.moduleData)
-              }
-            });
+  
           });
       });
     });
@@ -140,7 +133,7 @@ export default {
   methods : {
    
      setCookie(item){
-         // it sets the cookie called `username`
+        
        this.$cookies.set("idcours",item);
        console.log(this.$cookies.get("idcours"));
        this.$router.push("/courseContent/"+this.$cookies.get("idcours"));

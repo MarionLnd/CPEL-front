@@ -2,7 +2,6 @@
 import ProfileStudent from "./components/Student/Profile";
 import Login from "./components/Student/Login";
 import Exercise from "./components/Student/Exercise";
-import Student from "./components/Student/Student";
 import Course from "./components/Student/Course";
 import CourseContent from "./components/Student/CourseContent";
 import ExerciceContent from "./components/Student/ExerciceContent";
@@ -49,7 +48,6 @@ export default [
     {path: '/tableau-de-bord', component: Course },
     {path: '/profil', component: ProfileStudent },
     {path: '/course',component: Course},
-    {path: '/student', component: Student },
     {path: '/exercise', component: Exercise },
     {path: '/td', component: TD },
     {path: '/courseContent/:id', component: CourseContent },

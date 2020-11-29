@@ -127,7 +127,6 @@ export default {
                             console.log(response)
                             response.data.forEach((student) => {
                                 this.$router.push("/course");
-                                console.log("yes");
                                 if (student.studentNumber === user.data.userLogin.username) {
                                     this.$cookies.set("idStudent", student._id);
                                     this.$cookies.set("username", user.data.userLogin.username);
@@ -138,7 +137,7 @@ export default {
                             });
                         });
             }).catch(error => {
-                console.log("wesh")
+              
                 console.log(error.response)
                 this.msg= error.response.data.error
             });

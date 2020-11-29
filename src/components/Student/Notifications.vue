@@ -4,13 +4,6 @@
 
     <LeftMenu />
    
-   
-    <!--div class="card">
-         <h2 @click="setCookie()"> {{ message }} </h2>
-    </div-->
-
-		<!--a href="https://python.sdv.univ-paris-diderot.fr/cours-python.pdf" download="download">Download</a-->
-    <!--pdf src="https://cdn.mozilla.net/pdfjs/tracemonkey.pdf" ></pdf-->
 
     <table class="table">
   <thead>

@@ -101,33 +101,9 @@ export default {
     };
   },
   mounted() {
+  
        
-     
-    axios.get("https://cpel.herokuapp.com/api/exercises/"+this.$cookies.get("idTD")).then((response) => {
-      response.data.forEach((exo) => {
-       
-        axios
-          .get("https://cpel.herokuapp.com/api/tds/"+this.$cookies.get("idTD"))
-          .then((td) => {
-           // response.data.forEach((td) => {
-   console.log(td)
-           
-   
-                this.exoData.push({
-                  td: td.data.name,
-                  exercice: exo.name,
-                  idexercise:exo._id,
-                  wording:exo.wording,
-                 
-                });
-                this.date= td.data.dateLimit
-                console.log(this.date)
-                console.log(this.exoData)
-              
-            });
-          });
-    // });
-    });
+        
       
     axios.get("https://cpel.herokuapp.com/api/exercises/").then((response) => {
       response.data.forEach((exo) => {
@@ -156,14 +132,14 @@ export default {
   
             });
           });
-    // });
+
     });
  
   },
   methods : {
    
      setCookie(item){
-         // it sets the cookie called `username`
+        
        this.$cookies.set("idexercice",item);
        console.log(this.$cookies.get("idexercice"));
        this.$router.push("/exerciceContent/"+this.$cookies.get("idexercice"));

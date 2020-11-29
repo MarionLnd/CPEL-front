@@ -176,7 +176,7 @@ export default {
       // it sets the cookie called `username`
       this.$cookies.set("idTD", item);
       console.log(this.$cookies.get("idTD"));
-      //this.$router.push("/exercise/"+this.$cookies.get("idTD"));
+ 
       this.$router.push("/exercise");
     },
   },

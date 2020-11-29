@@ -52,7 +52,7 @@ export default {
 
     LeftMenu,
   },
-   //props: ['count'],
+   
   data() {
       return{
      studentRendering: []

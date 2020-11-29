@@ -9,8 +9,8 @@
         {{ item.module }}
      </h1>
       <div class="card">
-        <!--a :href=   item.content  download>{{ item.module }}</a-->
-       <p>{{ item.module }} </p>
+   
+       <pre>{{ item.content }} </pre>
       </div>
     </div>
   </div>

@@ -6,11 +6,6 @@
     <div class="exreciseCntent">
       <div class="enonce">
         <h3 class="title">Enoncé</h3>
-       <!--notifications group="custom-style"
-                   position="top center"
-                   classes="n-light"
-                   
-                   /-->
         <div class="card">
           <div v-for="item in exo" :key="item">
             <p>
@@ -303,7 +298,6 @@ export default {
         .then((response) => {
           response.data.forEach((renderings) => {
             if (renderings.idExercise === this.$route.params.id) {
-              // console.log(renderings.idExercise  +"     and         "+exercise._id);
               axios
                 .put(
                   "https://cpel.herokuapp.com/api/studentRenderings/" +
@@ -366,8 +360,6 @@ export default {
               );
               this.date = moment(String(new Date())).format("YYYY/MM/DD");
 
-              //console.log(this.dateLimit < this.date);
-              //  console.log(this.dateLimit);
             }
           });
         });
@@ -379,14 +371,14 @@ export default {
           )
           .then((response) => {
             response.data.forEach((renderings) => {
-              //   console.log(ex._id);
+            
 
               if (renderings.idExercise === ex.data._id) {
                 document.getElementById("yourcode").value = renderings.content;
               }
             });
           });
-        // console.log(this.exo);
+      
       });
   },
   computed: {
