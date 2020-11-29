@@ -1,5 +1,7 @@
 <template>
     <div>
+        <Header />
+
         <h1 class="pt-3 pb-1">Ajouter un professeur</h1>
 
         <!-- ALERTS -->
@@ -53,9 +55,13 @@
 
 <script>
 import axios from "axios";
+import Header from "@/components/Admin/Header";
 
 export default {
     name: "AddProfessor",
+    components: {
+        Header
+    },
     data() {
         return {
             professors: [],

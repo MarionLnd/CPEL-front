@@ -1,5 +1,7 @@
 <template>
     <div class="container">
+        <Header />
+
         <h1 class="pt-3 pb-3">Modifier les informations d'un étudiant</h1>
 
         <div class="card mt-4">
@@ -39,9 +41,13 @@
 
 <script>
 import axios from "axios"
+import Header from "@/components/Admin/Header";
 
 export default {
     name: "EditStudent",
+    components: {
+      Header
+    },
     data() {
         return {
             student: {},

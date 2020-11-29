@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Header />
         <h1 class="pt-3 pb-3">Détails professeur </h1>
 
         <div class="card mt-4">
@@ -36,9 +37,13 @@
 
 <script>
 import axios from 'axios'
+import Header from "@/components/Admin/Header";
 
 export default {
     name: "Professor",
+    components: {
+      Header
+    },
     data() {
         return {
             professor: {}
