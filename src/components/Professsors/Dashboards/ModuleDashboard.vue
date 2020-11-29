@@ -64,13 +64,8 @@
       }
     },
     created() {
-      axios.get("https://cpel.herokuapp.com/api/modules/").then(response => {
-          console.log(response.data)
-          for (let mod of response.data) {
-              if (mod.idProfessor === this.$cookies.get("idProfessor")) {
-                  this.data.push(mod)
-              }
-          }
+      axios.get("https://cpel.herokuapp.com/api/professors/" + this.$cookies.get("idProfessor") + "/modules").then(response => {
+          this.data = response.data
       });
       axios.get("https://cpel.herokuapp.com/api/groups/").then(response => {
           this.groups = response.data;
@@ -92,10 +87,7 @@
         dataManager(sortOrder, pagination) {
         if (this.data.length < 1) return;
 
-        console.log(this.data)
-
         let local = this.data;
-        console.log(local)
 
         // sortOrder can be empty, so we have to check for that as well
         if (sortOrder.length > 0) {

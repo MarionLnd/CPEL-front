@@ -26,7 +26,7 @@
                 <div class="form-group">
                     <label for="students">Ajouter les étudiants :</label>
                     <select id="students" class="form-control" multiple="multiple" v-model="formData.studentsAdded" required>
-                        <option v-for="(student, key) of formData.students" :key="key">{{student.idStudent}} : {{ student.firstname }} {{ student.lastname }}</option>
+                        <option v-for="(student, key) of formData.students" :key="key">[{{student.studentNumber}}] - {{ student.firstname }} {{ student.lastname }}</option>
                     </select>
                 </div>
 
@@ -66,14 +66,14 @@
             }
         },
         created() {
-            axios.get("https://cpel.herokuapp.com/api/student/").then(response => {
+            axios.get("https://cpel.herokuapp.com/api/students/").then(response => {
                 for(let student of response.data) {
                     if (student.idGroup === "") {
                         this.formData.students.push(student)
                     }
                 }
             });
-            axios.get("https://cpel.herokuapp.com/api/module/").then(response => {
+            axios.get('https://cpel.herokuapp.com/api/professors/' + this.$cookies.get("idProfessor") + "/modules").then(response => {
                 this.formData.modules = response.data
             });
         },

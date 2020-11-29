@@ -20,7 +20,7 @@
                     <div class="dropdown-menu p-1" aria-labelledby="navbarDropdown">
                         <router-link class="dropdown-item nav-link text-center" to="/admin/ajouter-professeur">Professeur</router-link>
                         <router-link class="dropdown-item nav-link text-center" to="/admin/ajouter-etudiant">Étudiant</router-link>
-                        <!--<router-link class="dropdown-item nav-link text-center" to="/admin/ajouter-groupe">Groupe</router-link>-->
+                        <router-link class="dropdown-item nav-link text-center" to="/admin/ajouter-groupe">Groupe</router-link>
                     </div>
                 </li>
                 <li class="nav-item">

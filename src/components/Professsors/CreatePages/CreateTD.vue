@@ -5,14 +5,14 @@
 
         <!-- ALERTS -->
         <transition name="slide-fade">
-            <div class="alert alert-success" v-if="formData.submitted">
-                Le TD a été crée avec succès !
+            <div class="alert alert-success" v-if="formData.success">
+                {{ alertMessage }}
             </div>
         </transition>
 
         <transition>
             <div class="alert alert-danger alert-dismissible" v-if="formData.error">
-                {{ formData.errorMessage }}
+                {{ alertMessage }}
             </div>
         </transition>
 
@@ -68,7 +68,6 @@
         components: {Header},
         data() {
             return {
-                name: "",
                 getModules: [],
                 getExercises: [],
                 formData: {
@@ -76,10 +75,11 @@
                     moduleSelected: {},
                     exercisesSelected: [],
                     limitDate: "",
-                    errorMessage: "",
                     error: false,
-                    submitted: false
-                }
+                    submitted: false,
+                    success: false
+                },
+                alertMessage: ""
             }
         },
         methods: {
@@ -96,22 +96,39 @@
                 axios.post(`https://cpel.herokuapp.com/api/td`, tdCreated)
                     .then((response) => {
                         let newTDID = response.data.NewTD.replaceAll("201 => https://cpel.herokuapp.com/api/tds/", "")
-                        axios.put("https://cpel.herokuapp.com/api/modules/" + this.formData.moduleSelected._id + "/" + newTDID)
-                        .then((response) => {
-                            console.log(response)
-                            // redirect
-                            this.$router.push(this.$route.query.redirect || '/professeur')
+                        axios.put("https://cpel.herokuapp.com/api/modules/" + this.formData.moduleSelected._id + "/tds/" + newTDID)
+                        .then((responsePUT) => {
+                            console.log(responsePUT)
                         })
                         .catch(error => {
                             console.log(error)
                             this.formData.error = true
                             this.formData.errorMessage = "Une erreur est survenue lors de la création du TD.. Réessayez !"
                         })
+                        for (let exo of this.formData.exercisesSelected) {
+                            let updatedExo = {
+                                name: exo.name,
+                                wording: exo.wording,
+                                idTD: newTDID
+                            }
+                            axios.put("https://cpel.herokuapp.com/api/exercises/" + exo._id, updatedExo)
+                                .then(responsePUT2 => {
+                                    console.log(responsePUT2)
+                                    this.alertMessage = "Une erreur est survenue lors de la création du TD.. Réessayez !"
+                                })
+                                .catch(error => {
+                                    console.log(error)
+                                    this.formData.error = true
+                                    this.alertMessage = "Une erreur est survenue lors de la création du TD.. Réessayez !"
+                                })
+                        }
+                        this.formData.success = true
+                        this.alertMessage = "Le TD a été crée avec succès !"
                     })
                     .catch(error => {
                         console.log(error)
                         this.formData.error = true
-                        this.formData.errorMessage = "Une erreur est survenue lors de la création du TD.. Réessayez !"
+                        this.alertMessage = "Une erreur est survenue lors de la création du TD.. Réessayez !"
                     })
                 this.formData.submitted = false
             },
@@ -131,7 +148,7 @@
             }
         },
         created() {
-            axios.get('https://cpel.herokuapp.com/api/modules/')
+            axios.get('https://cpel.herokuapp.com/api/professors/' + this.$cookies.get("idProfessor") + "/modules")
                 .then(response => {
                     for(let mod of response.data) {
                         this.getModules.push(mod)
@@ -142,9 +159,7 @@
             axios.get('https://cpel.herokuapp.com/api/exercises/')
                 .then(response => {
                     for(let exercise of response.data) {
-                        if (exercise.idTD == "") {
-                            this.getExercises.push(exercise)
-                        } else {
+                        if (exercise.idTD === undefined) {
                             this.getExercises.push(exercise)
                         }
                     }

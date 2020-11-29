@@ -2,6 +2,14 @@
     <div class="container">
         <Header />
 
+        <!-- ALERTS -->
+        <transition name="slide-fade" v-if="submitted">
+            <div class="alert"
+                 :class="{'alert-success': submitted, 'alert-danger': error}">
+                {{ alertMessage }}
+            </div>
+        </transition>
+
         <h1 class="pt-3 pb-3">Groupe {{ group.name }}</h1>
         <div class="card">
             <div class="card-header">
@@ -14,9 +22,7 @@
                             </router-link>
                         </span>
                     </h5>
-
                 </div>
-                <h6 class="card-subtitle text-muted text-center">Identifiant du groupe : {{ group.idGroup }}</h6>
             </div>
             <div class="card-body text-left">
                 <p>Ce groupe est composé de {{ group.students.length }} étudiants : </p>
@@ -27,10 +33,10 @@
                         </router-link>
                     </li>
                 </ul>
-                <p v-if="group.modules.length === 0">Pour le moment, ce groupe n'est lié à aucun module.</p>
-                <div v-if="group.modules.length !== 0">
+                <p v-if="groupModules.length === 0">Pour le moment, ce groupe n'est lié à aucun module que vous avez créée.</p>
+                <div v-if="groupModules.length !== 0">
                     <p>Il est actuellement lié au(x) module(s) suivant(s) :</p>
-                    <ul v-for="(mod, key) in group.modules" :key="key">
+                    <ul v-for="(mod, key) in groupModules" :key="key">
                         <li>
                             <router-link :to="`/professeur/module/${mod._id}`">{{ mod.name }}</router-link>
                         </li>
@@ -64,7 +70,7 @@
                                         {{ modulesSelected.name }}
                                     </p>
                                 </div>
-                                <button class="btn btn-outline-success mt-3" type="submit" @click.prevent="addModuleToGroup">Lier le groupe à ce module</button>
+                                <button class="btn btn-outline-success mt-3" type="submit" @click.prevent="addModuleToGroup">Lier le module à ce groupe</button>
                             </div>
                         </div>
                     </div>
@@ -87,7 +93,7 @@
                                     <label for="studentToAdd">Les étudiants sans groupes :</label>
                                     <select id="studentToAdd" class="custom-select w-100" v-model="studentSelected">
                                         <option v-for="(student, key) in getStudents" :key="key" :value="student">
-                                            {{ student.name }}
+                                            {{ student.lastname }} {{ student.firstname }}
                                         </option>
                                     </select>
                                 </form>
@@ -98,7 +104,7 @@
                                     </p>
                                 </div>
 
-                                <button class="btn btn-outline-success mt-3" type="submit" @submit.prevent="addStudentToGroup">Lier le groupe à ce module</button>
+                                <button class="btn btn-outline-success mt-3" type="submit" @click.prevent="addStudentToGroup">Lier l'étudiant(e) à ce groupe</button>
                             </div>
                         </div>
                     </div>
@@ -123,18 +129,26 @@ export default {
             getStudents: [],
             modulesSelected: {},
             studentSelected: {},
+            groupModules: [],
+            error: false,
+            submitted: false
         }
     },
     created() {
         axios.get("https://cpel.herokuapp.com/api/groups/" + this.id).then(response => {
             this.group = response.data
         })
-        axios.get("https://cpel.herokuapp.com/api/modules/").then(response => {
+        axios.get("https://cpel.herokuapp.com/api/professors/" + this.$cookies.get("idProfessor") + "/modules").then(response => {
             this.getModules = response.data
+            for (let mod of this.group.modules) {
+                if (mod.idProfessor === this.$cookies.get("idProfessor")) {
+                    this.groupModules.push(mod)
+                }
+            }
         })
         axios.get("https://cpel.herokuapp.com/api/students/").then(response => {
             for(let student of response.data) {
-                if (student._id === "") {
+                if (student.idGroup === "") {
                     this.getStudents.push(student)
                 }
             }
@@ -142,21 +156,49 @@ export default {
     },
     methods: {
         addModuleToGroup() {
+            this.submitted = true
             axios.put("https://cpel.herokuapp.com/api/groups/" + this.id + "/modules/" + this.modulesSelected._id)
                 .then(response => {
                     console.log(response)
+                    axios.put("https://cpel.herokuapp.com/api/modules/" + this.modulesSelected._id + "/" + this.id, {idGroup: this.id})
+                        .then(responsePUT => {
+                            console.log(responsePUT)
+                            this.alertMessage = "L'ajout du nouveau module a été fait avec succès"
+                            window.location.reload()
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            this.error = true
+                            this.alertMessage = "Une erreur est survenue lors de la mise à jour du groupe pour le module"
+                        })
                 })
                 .catch(error => {
                     console.log(error)
+                    this.error = true
+                    this.alertMessage = "Une erreur est survenue de l'ajout du module"
                 })
         },
         addStudentToGroup(){
+            this.submitted = true
             axios.put("https://cpel.herokuapp.com/api/groups/" + this.id + "/students/" + this.studentSelected._id)
                 .then(response => {
                     console.log(response)
+                    axios.put("https://cpel.herokuapp.com/api/students/group/" + this.studentSelected._id, {idGroup: this.id})
+                        .then(responsePUT => {
+                            console.log(responsePUT)
+                            this.alertMessage = "L'ajout du nouvel étudiant a été fait avec succès"
+                            window.location.reload()
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            this.error = true
+                            this.alertMessage = "Une erreur est survenue lors de la mise à jour du groupe de l'étudiant(e)"
+                        })
                 })
                 .catch(error => {
                     console.log(error)
+                    this.error = true
+                    this.alertMessage = "Une erreur est survenue lors de l'ajout de l'étudiant(e)"
                 })
         }
     }

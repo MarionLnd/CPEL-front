@@ -27,7 +27,7 @@
 
                     <div class="form-group">
                         <label for="studentNumber">Numéro étudiant:</label>
-                        <input id="studentNumber" class="form-control" type="text" :placeholder="student.studentNumber" disabled>
+                        <input id="studentNumber" class="form-control" type="text" :placeholder="student.studentNumber" v-model="formData.idNumber">
                     </div>
 
                     <button type="submit" class="btn btn-outline-success" @click.prevent="sendForm">Modifier</button>
