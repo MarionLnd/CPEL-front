@@ -7,7 +7,7 @@
                 <h4 class="card-title">
                     Cours
                 </h4>
-                <p>{{ mod.content }}</p>
+                <pre>{{ mod.content }}</pre>
             </div>
             <div class="card-body text-left">
                 <div>
