@@ -55,6 +55,7 @@ export default {
             axios.delete("https://cpel.herokuapp.com/api/students/" + studentId)
                 .then(response => {
                     console.log(response)
+                    window.location.reload()
                 })
             .catch(error => console.log(error))
         }

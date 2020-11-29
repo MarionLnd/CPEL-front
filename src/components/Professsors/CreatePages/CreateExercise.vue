@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Header />
         <h2>Créer un exercice</h2>
 
         <!-- ALERTS -->
@@ -43,10 +44,12 @@
 <script>
 //import Switches from 'vue-switches';
 import axios from 'axios';
+import Header from "@/components/Professsors/Header";
 
 export default {
     name: "CreateExercice",
     components: {
+        Header
 
     },
     data() {

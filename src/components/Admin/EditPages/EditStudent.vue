@@ -10,7 +10,6 @@
                 <p class="card-subtitle text-muted">Étudiant(e)</p>
             </div>
             <div class="card-body text-left">
-                <form>
                     <div class="form-group">
                         <label for="lastname">Nom:</label>
                         <input id="lastname" class="form-control" type="text" :placeholder="student.lastname" v-model="formData.lastname">
@@ -28,11 +27,10 @@
 
                     <div class="form-group">
                         <label for="studentNumber">Numéro étudiant:</label>
-                        <input id="studentNumber" class="form-control" type="text" placeholder="20192031" v-model="formData.idNumber">
+                        <input id="studentNumber" class="form-control" type="text" :placeholder="student.studentNumber" disabled>
                     </div>
 
-                    <button type="submit" class="btn btn-outline-success" @submit.prevent="sendForm">Modifier</button>
-                </form>
+                    <button type="submit" class="btn btn-outline-success" @click.prevent="sendForm">Modifier</button>
 
             </div>
         </div>
@@ -70,12 +68,12 @@ export default {
                 lastname: this.formData.lastname !== "" ? this.formData.lastname : this.student.lastname,
                 firstname: this.formData.firstname !== "" ? this.formData.firstname : this.student.firstname,
                 email: this.formData.email !== "" ? this.formData.email : this.student.email,
-                studentNumber: this.formData.studentNumber !== "" ? this.formData.studentNumber : this.student.studentNumber,
+                studentNumber: this.formData.idNumber !== "" ? this.formData.idNumber : this.student.studentNumber,
             }
-            axios.get("https://cpel.herokuapp.com/api/students/" + this.$route.params.idStudent, updatedStudent)
+            axios.put("https://cpel.herokuapp.com/api/students/" + this.$route.params.idStudent, updatedStudent)
                 .then(response => {
                     console.log(response)
-                    this.$router.pop(-1)
+                    this.$router.push("/admin/etudiant/" + this.$route.params.idStudent)
                 })
                 .catch(error => console.log(error))
         }

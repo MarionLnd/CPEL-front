@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Header />
         <h2 class="pt-3 pb-3">Créer un groupe</h2>
 
         <!-- ALERTS -->
@@ -44,10 +45,12 @@
 
 <script>
     import axios from 'axios'
+    import Header from "@/components/Professsors/Header";
 
     export default {
         name: "CreateGroup",
         components: {
+            Header
         },
         data() {
             return {

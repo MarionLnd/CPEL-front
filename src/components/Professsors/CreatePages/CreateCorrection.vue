@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h2 class="mt-5">Création d'une correction</h2>
+        <Header />
+        <h2 class="pt-3 pb-3">Création d'une correction</h2>
 
         <!-- ALERTS -->
         <transition name="slide-fade">
@@ -51,9 +52,11 @@
 
 <script>
     import axios from 'axios'
+    import Header from "@/components/Professsors/Header";
 
     export default {
         name: "CreateCorrection",
+        components: {Header},
         props: ['idExercice'],
         data() {
             return {

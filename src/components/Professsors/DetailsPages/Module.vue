@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Header />
         <h1 class="pt-3 pb-3">{{ mod.name }}</h1>
         <div class="card">
             <div class="card-header">
@@ -28,9 +29,11 @@
 
 <script>
 import axios from 'axios'
+import Header from "@/components/Professsors/Header";
 
 export default {
     name: "Module",
+    components: {Header},
     data() {
         return {
             id: this.$route.params.idModule,

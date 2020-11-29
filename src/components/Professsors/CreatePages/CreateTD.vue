@@ -1,5 +1,6 @@
 <template>
     <div class="text-left">
+        <Header />
         <h2 class="pt-3 pb-3 text-center">Créer un TD</h2>
 
         <!-- ALERTS -->
@@ -60,9 +61,11 @@
 
 <script>
     import axios from "axios";
+    import Header from "@/components/Professsors/Header";
 
     export default {
         name: "CreateTD",
+        components: {Header},
         data() {
             return {
                 name: "",

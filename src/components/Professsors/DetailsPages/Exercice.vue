@@ -1,5 +1,7 @@
 <template>
     <div class="container">
+        <Header />
+
         <CodeRending :exercise="exo" :hasCorrection="hasCorrection" :contentCorrection="correctionContent.content" />
         <router-link :to="`/professeur/creer-correction/`" v-if="!hasCorrection">
              <button class="btn btn-outline-info">Ajouter une correction</button>
@@ -13,10 +15,12 @@
 <script>
 import axios from "axios";
 import CodeRending from "./CodeRending";
+import Header from "@/components/Professsors/Header";
 
 export default {
     name: "Exercice",
     components: {
+        Header,
         CodeRending
     },
     props: ["exo", "contentCorrection"],

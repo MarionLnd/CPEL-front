@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Header />
         <h2 class="pt-3 pb-3">TD - {{ td.name }}</h2>
         <div class="text-left">
             <h5 class="text-danger">Date limite de rendu : {{ td.dateLimit | moment("DD/MM/YYYY") }}</h5>
@@ -19,10 +20,12 @@
 <script>
     import axios from "axios";
     import Exercice from "@/components/Professsors/DetailsPages/Exercice";
+    import Header from "@/components/Professsors/Header";
 
     export default {
         name: "TD",
         components: {
+            Header,
             Exercice
         },
         data() {

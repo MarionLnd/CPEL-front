@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Header />
         <h2>Créer un module</h2>
 
         <!-- ALERTS -->
@@ -30,7 +31,8 @@
 
                 <div class="form-group">
                     <label for="course">Contenu du cours</label>
-                    <input type="text" class="form-control" id="course" v-model="formData.content">
+                    <textarea type="text" class="form-control" id="course" v-model="formData.content">
+                    </textarea>
                 </div>
 
                 <div class="form-group">
@@ -50,9 +52,11 @@
 
 <script>
 import axios from "axios";
+import Header from "@/components/Professsors/Header";
 
 export default {
     name: "CreateModule",
+    components: {Header},
     data() {
         return {
             getGroups: [],
@@ -76,13 +80,12 @@ export default {
 
             let moduleCreated = {
                 name: this.formData.name,
-                content: this.content,
+                content: this.formData.content,
                 groups: [this.formData.groupSelected._id],
                 idProfessor: this.idProfessor,
                 tds: []
             }
             console.log(moduleCreated)
-            console.log(this.$refs.file)
             // Ajouter le nouveau module a la base
             axios.post("https://cpel.herokuapp.com/api/module/", moduleCreated)
                 .then(() => {
