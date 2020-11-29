@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Header />
         <h1 class="pt-3 pb-3">Profil - {{ student.firstname }} {{ student.lastname }}</h1>
         <div class="row">
             <div class="col-6">
@@ -67,9 +68,11 @@
 
 <script>
     import axios from "axios";
+    import Header from "@/components/Professsors/Header";
 
     export default {
         name: "Student",
+        components: {Header},
         data() {
             return {
                 id: this.$route.params.idStudent,

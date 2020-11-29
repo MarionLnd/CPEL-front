@@ -1,5 +1,7 @@
 <template>
     <div class="container">
+        <Header />
+
         <h1 class="pt-3 pb-3">Groupe {{ group.name }}</h1>
         <div class="card">
             <div class="card-header">
@@ -108,9 +110,11 @@
 
 <script>
 import axios from "axios";
+import Header from "@/components/Professsors/Header";
 
 export default {
     name: "Group",
+    components: {Header},
     data() {
         return {
             id: this.$route.params.idGroup,

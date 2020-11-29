@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Header />
         <h2 class="pt-3 pb-3">Exercice - {{ exercise.name }}</h2>
         <CodeRending :exercise="exercise" :contentStudent="rending.content" />
     </div>
@@ -8,10 +9,11 @@
 <script>
 import axios from "axios";
 import CodeRending from "@/components/Professsors/DetailsPages/CodeRending";
+import Header from "@/components/Professsors/Header";
 
 export default {
     name: "StudentRending",
-    components: {CodeRending},
+    components: {Header, CodeRending},
     data() {
         return {
             idStudent: this.$route.params.idStudent,

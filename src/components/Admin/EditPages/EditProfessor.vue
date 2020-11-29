@@ -10,7 +10,6 @@
                 <p class="card-subtitle text-muted">Professeur</p>
             </div>
             <div class="card-body text-left">
-                <form>
                     <div class="form-group">
                         <label for="lastname">Nom:</label>
                         <input id="lastname" class="form-control" type="text" :placeholder="professor.lastname" v-model="formData.lastname">
@@ -31,8 +30,7 @@
                         <input id="profNum" class="form-control" type="text" :placeholder="professor.professorNumber" v-model="formData.idNumber">
                     </div>
 
-                    <button type="submit" class="btn btn-outline-success" @submit.prevent="sendForm">Modifier</button>
-                </form>
+                    <button type="submit" class="btn btn-outline-success" @click.prevent="sendForm">Modifier</button>
             </div>
         </div>
     </div>
@@ -66,15 +64,16 @@ import Header from "@/components/Admin/Header";
         methods: {
             sendForm() {
                 let updatedProfessor = {
-                    lastname: this.formData.lastname !== "" ? this.formData.lastname : this.student.lastname,
-                    firstname: this.formData.firstname !== "" ? this.formData.firstname : this.student.firstname,
-                    email: this.formData.email !== "" ? this.formData.email : this.student.email,
-                    studentNumber: this.formData.studentNumber !== "" ? this.formData.studentNumber : this.student.studentNumber,
+                    lastname: this.formData.lastname !== "" ? this.formData.lastname : this.professor.lastname,
+                    firstname: this.formData.firstname !== "" ? this.formData.firstname : this.professor.firstname,
+                    email: this.formData.email !== "" ? this.formData.email : this.professor.email,
+                    professorNumber: this.formData.idNumber !== "" ? this.formData.idNumber : this.professor.professorNumber
                 }
-                axios.get("https://cpel.herokuapp.com/api/professors/" + this.$route.params.idProfessor, updatedProfessor)
+                console.log(updatedProfessor)
+                axios.put("https://cpel.herokuapp.com/api/professors/" + this.$route.params.idProfessor, updatedProfessor)
                     .then(response => {
                         console.log(response)
-                        this.$router.pop(-1)
+                        this.$router.push("/admin/professeur/" + this.$route.params.idProfessor)
                     })
                     .catch(error => console.log(error))
             }

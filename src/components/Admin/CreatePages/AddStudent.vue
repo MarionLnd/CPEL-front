@@ -48,7 +48,7 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-outline-success mt-3" @click="sendForm">Ajouter un(e) étudiant(e)</button>
+                <button type="submit" class="btn btn-outline-success mt-3" @click.prevent="sendForm">Ajouter un(e) étudiant(e)</button>
             </form>
         </div>
     </div>
@@ -65,7 +65,6 @@ export default {
     },
     data() {
         return {
-            students: [],
             groups: [],
             formData: {
                 lastname: "",
@@ -82,6 +81,7 @@ export default {
     },
     methods: {
         sendForm() {
+            this.formData.submitted = true
             if (this.allRequiredFieldsAreFilled()) {
                 let studentCreated = {
                     lastname: this.formData.lastname,
@@ -100,6 +100,7 @@ export default {
                     .catch(error => {
                         console.log(error)
                         this.formData.error = true
+                        this.alertMessage = "L'ajout de l'étudiant(e) a échoué, réessayez"
                     })
             } else {
                 this.formData.error = true
@@ -112,13 +113,9 @@ export default {
         }
     },
     created() {
-        axios.get("https://cpel.herokuapp.com/api/students/")
-            .then(response => this.students = response.data)
-            .catch(error => console.log(error))
-
         axios.get("https://cpel.herokuapp.com/api/groups/")
             .then(response => this.groups = response.data)
-            .catch(error => console.log(error))
+            .catch(error => console.log(error.response))
     }
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
     <div class="text-left">
+        <Header />
 
         <!-- ALERTS -->
         <transition name="slide-fade" v-if="codeSent || errorOnSending">
@@ -58,7 +59,12 @@
     </div>
 </template>
 
-<script src="http://www.skulpt.org/static/skulpt.min.js" type="text/javascript"></script>
+<script>
+import Header from "@/components/Professsors/Header";
+export default {
+    components: {Header}
+}
+</script>
 <script src="http://www.skulpt.org/static/skulpt-stdlib.js" type="text/javascript"></script>
 
 <script>
