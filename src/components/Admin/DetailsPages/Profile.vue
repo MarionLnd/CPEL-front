@@ -74,7 +74,7 @@
         methods: {
             changePassword() {
                 if(this.validatePassword(this.newPassword)) {
-                    axios.put("")
+                    axios.put("https://cpel.herokuapp.com/api/users/" + this.$cookies.get("idUser"), {password: this.newPassword})
                         .then(() => {
                             this.hasError = false
                             this.alertMessage = "Votre mot de passe a été modifié avec succès !"

@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h2 class="pt-3 pb-3">Inscription à la plateforme</h2>
+        <h1 class="pb-3">Application CPEL</h1>
 
         <!-- ALERTS -->
         <transition name="slide-fade">
@@ -15,7 +15,8 @@
             </div>
         </transition>
 
-        <div class="mt-3">
+        <div class="mt-3 card p-5">
+            <h2 class="pb-3">Inscription à la plateforme</h2>
             <form class="text-left" @submit.prevent="sendForm">
                 <div class="form-group">
                     <label class="label-cpel" for="profileType">Pour quel profil:</label>
@@ -52,6 +53,7 @@
                 <input type="submit" class="btn btn-outline-success" value="S'inscrire">
             </form>
         </div>
+        <p class="mt-3">Vous avez déjà un compte ? <router-link to="/login">Connectez-vous</router-link></p>
     </div>
 </template>
 

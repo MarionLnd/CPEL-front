@@ -44,6 +44,8 @@ import StudentAdmin from "@/components/Admin/DetailsPages/Student";
 import GroupAdmin from "@/components/Admin/DetailsPages/Group";
 
 export default [
+    //{path: '/', component: Login},
+
     {path: '/login', component: Login },
     {path: '/tableau-de-bord', component: Course },
     {path: '/profil', component: ProfileStudent },

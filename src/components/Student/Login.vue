@@ -100,7 +100,9 @@ export default {
                             for (let prof of response.data) {
                                 console.log(prof)
                                 if (prof.professorNumber === user.data.userLogin.username) {
+                                    console.log(user.data.userLogin)
                                     this.$cookies.set("idProfessor", prof._id);
+                                    this.$cookies.set("idUser", user.data.userLogin._id);
                                     this.$cookies.set("type", user.data.userLogin.type);
                                     console.log(this.$cookies.get("idProfessor"));
                                     console.log(this.$cookies.get("type"));
