@@ -82,7 +82,7 @@ export default {
                 name: this.formData.name,
                 content: this.formData.content,
                 groups: [this.formData.groupSelected._id],
-                idProfessor: this.idProfessor,
+                idProfessor: this.$cookies.get("idProfessor"),
                 tds: []
             }
             console.log(moduleCreated)
