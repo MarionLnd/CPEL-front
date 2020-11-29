@@ -1,11 +1,13 @@
 <template>
     <div>
+        <Header />
+
         <h1 class="pt-3 pb-1">Ajouter un étudiant</h1>
 
         <!-- ALERTS -->
-        <transition name="slide-fade">
+        <transition name="slide-fade" v-if="formData.submitted">
             <div class="alert"
-                 :class="{'alert-success': formData.submitted, 'alert-danger': formData.error}">
+                 :class="{'alert-success': formData.success, 'alert-danger': formData.error}">
                 {{ alertMessage }}
             </div>
         </transition>
@@ -54,9 +56,13 @@
 
 <script>
 import axios from "axios";
+import Header from "@/components/Admin/Header";
 
 export default {
     name: "AddStudent",
+    components: {
+        Header
+    },
     data() {
         return {
             students: [],
@@ -68,6 +74,7 @@ export default {
                 email: "",
                 groupSelected: "",
                 error: false,
+                success: false,
                 submitted: false
             },
             alertMessage: ""
@@ -75,33 +82,41 @@ export default {
     },
     methods: {
         sendForm() {
-
-            let studentCreated = {
-                lastname: this.formData.lastname,
-                firstname: this.formData.firstname,
-                studentNumber: this.formData.idNumber,
-                email: this.formData.email,
-                idGroup: this.formData.groupSelected,
-            }
-            console.log(studentCreated)
+            if (this.allRequiredFieldsAreFilled()) {
+                let studentCreated = {
+                    lastname: this.formData.lastname,
+                    firstname: this.formData.firstname,
+                    studentNumber: this.formData.idNumber,
+                    email: this.formData.email,
+                    idGroup: this.formData.groupSelected,
+                }
+                console.log(studentCreated)
                 // Add student ot the base
-            axios.post("https://cpel.herokuapp.com/api/student/", studentCreated)
-                .then(() => {
-                    this.formData.submitted = true
-                    this.$router.push("/admin/tableau-de-bord")
-                })
-                .catch(error => {
-                    console.log(error)
-                    this.formData.error = true
-                })
+                axios.post("https://cpel.herokuapp.com/api/student/", studentCreated)
+                    .then(() => {
+                        this.formData.success = true
+                        this.$router.push("/admin/tableau-de-bord")
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        this.formData.error = true
+                    })
+            } else {
+                this.formData.error = true
+                this.alertMessage = "Tous les champs requis ne sont pas remplis"
+            }
+        },
+        allRequiredFieldsAreFilled() {
+            return (this.formData.firstname !== "" && this.formData.lastname !== ""
+                && this.formData.email !== "" && this.formData.idNumber !== "");
         }
     },
     created() {
-        axios.get("https://cpel.herokuapp.com/api/student/")
+        axios.get("https://cpel.herokuapp.com/api/students/")
             .then(response => this.students = response.data)
             .catch(error => console.log(error))
 
-        axios.get("https://cpel.herokuapp.com/api/group/")
+        axios.get("https://cpel.herokuapp.com/api/groups/")
             .then(response => this.groups = response.data)
             .catch(error => console.log(error))
     }

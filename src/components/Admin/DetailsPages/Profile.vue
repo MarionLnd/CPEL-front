@@ -1,5 +1,7 @@
 <template>
     <div class="container">
+        <Header />
+
         <h1 class="pt-3 pb-3">Profil</h1>
 
         <!-- ALERTS -->
@@ -51,9 +53,13 @@
 
 <script>
     import axios from "axios";
+    import Header from "@/components/Admin/Header";
 
     export default {
         name: "Profile",
+        components: {
+            Header
+        },
         data() {
             return {
                 id: this.$cookies.get("idProfessor"),

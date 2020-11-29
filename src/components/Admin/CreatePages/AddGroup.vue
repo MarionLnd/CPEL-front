@@ -1,5 +1,7 @@
 <template>
     <div>
+        <Header />
+
         <h1 class="pt-3 pb-3">Ajouter un groupe</h1>
 
         <!-- ALERTS -->
@@ -44,9 +46,11 @@
 
 <script>
 import axios from "axios";
+import Header from "@/components/Admin/Header";
 
 export default {
     name: "AddGroup",
+    components: {Header},
     data() {
         return {
             formData: {

@@ -109,8 +109,6 @@
             },
             sendCode() {
                 let correctionToSend = {
-                    _id: this.correction._id,
-                    __v: this.correction.__v,
                     content: this.correction.content,
                     correctionCode: this.correction.correctionCode,
                     createdAt: this.correction.createdAt,
