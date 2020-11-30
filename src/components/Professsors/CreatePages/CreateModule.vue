@@ -31,7 +31,7 @@
 
                 <div class="form-group">
                     <label for="course">Contenu du cours</label>
-                    <textarea type="text" class="form-control" id="course" v-model="formData.content">
+                    <textarea type="text" class="form-control" id="course" v-model="formData.content" rows="19">
                     </textarea>
                 </div>
 

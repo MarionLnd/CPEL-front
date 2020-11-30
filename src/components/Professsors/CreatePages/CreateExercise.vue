@@ -25,7 +25,7 @@
 
                 <div class="form-group">
                     <label for="txt">L'énoncé de l'exercice:</label>
-                    <textarea id="txt" class="form-control" v-model.trim="formData.wording" required></textarea>
+                    <textarea id="txt" class="form-control" v-model.trim="formData.wording" rows="18" required></textarea>
                 </div>
 
                 <!--<label for="module">Pour le TD :</label>

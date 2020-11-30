@@ -1,7 +1,7 @@
 <template>
   <div class="container">
       <h1 class="text-dark">
-          CPEL Application
+          CPEL
       </h1>
       <div class="row">
           <div class="card col mr-5" style="float: left; margin-right: 10px">

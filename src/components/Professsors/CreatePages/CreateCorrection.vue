@@ -22,7 +22,7 @@
                     <label class="text-left" for="exercise">Pour l'exercice :</label>
                     <select id="exercise" class="custom-select" v-model="formData.selectedExercise" required>
                         <option
-                            v-for="exercise in formData.exercises"
+                            v-for="exercise in getProfExercises"
                             :key="exercise.idExercise"
                             :value="exercise">
                             Exercice : {{ exercise.name }}
@@ -36,7 +36,7 @@
                         {{ this.formData.selectedExercise.wording }}
                     </p>
                     <label class="" for="txt">Correction pour l'énoncé selectionné :</label>
-                    <textarea id="txt" class="form-control" v-model.trim="formData.content" required></textarea>
+                    <textarea id="txt" class="form-control" v-model.trim="formData.content" rows="16" required></textarea>
                 </div>
 
                 <div class="form-group">
@@ -60,7 +60,11 @@
         props: ['idExercice'],
         data() {
             return {
+                id: this.$cookies.get("idProfessor"),
                 idExercisesCorrected: [],
+                modulesProf: [],
+                tdsProfs: [],
+                exercisesProf: [],
                 formData: {
                     exercises: [],
                     selectedExercise: {},
@@ -71,6 +75,35 @@
                 }
             }
         },
+        computed: {
+          getProfExercises() {
+              let profExercises = []
+              for (let mod of this.modulesProf) {
+                  for (let td of mod.tds) {
+                      console.log(td)
+                      for (let exo of td.exercises) {
+                          if (!this.idExercisesCorrected.includes(exo._id)) {
+                              profExercises.push(exo)
+                          }
+                      }
+                  }
+              }
+              // Sort exercises by their id modules
+              profExercises.sort((a, b) => {
+                  let ma = a.createdAt,
+                      mb = b.createdAt;
+
+                  if (ma < mb) {
+                      return -1;
+                  }
+                  if (ma > mb) {
+                      return 1;
+                  }
+                  return 0;
+              })
+              return profExercises
+          }
+        },
         created() {
             axios.get("https://cpel.herokuapp.com/api/corrections")
                 .then(response => {
@@ -78,26 +111,9 @@
                         this.idExercisesCorrected.push(correction.idExercise)
                     }
                 })
-            axios.get("https://cpel.herokuapp.com/api/exercises")
-            .then(response => {
-                for(let exo of response.data) {
-                    if (!this.idExercisesCorrected.includes(exo._id)) {
-                        this.formData.exercises.push(exo)
-                    }
-                }
-                // Sort exercises by their id modules
-                this.formData.exercises.sort((a, b) => {
-                    let ma = a.createdAt,
-                        mb = b.createdAt;
 
-                    if (ma < mb) {
-                        return -1;
-                    }
-                    if (ma > mb) {
-                        return 1;
-                    }
-                    return 0;
-                })
+            axios.get("https://cpel.herokuapp.com/api/professors/" + this.id + "/modules").then(response => {
+                this.modulesProf = response.data
             })
         },
         methods: {

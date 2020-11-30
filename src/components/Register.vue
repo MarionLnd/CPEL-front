@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1 class="pb-3">Application CPEL</h1>
+        <h1 class="pb-3">CPEL</h1>
 
         <!-- ALERTS -->
         <transition name="slide-fade">

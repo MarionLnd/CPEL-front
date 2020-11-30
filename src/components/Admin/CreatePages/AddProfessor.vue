@@ -40,13 +40,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="label-cpel" for="module">Pour le module :</label>
-                    <select id="module" class="custom-select" v-model="formData.moduleSelected">
-                        <option v-for="(mod, key) of formData.modules" :key="key" :value="mod._id">{{ mod.name }}</option>
-                    </select>
-                </div>
-
                 <button type="submit" class="btn btn-outline-success mt-3" @click.prevent="sendForm">Ajouter un(e) enseignant(e)</button>
             </form>
         </div>
