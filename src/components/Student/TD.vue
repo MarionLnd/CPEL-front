@@ -105,12 +105,18 @@ export default {
     };
   },
   mounted() {
+   
     axios.get("https://cpel.herokuapp.com/api/tds/").then((response) => {
       response.data.forEach((td) => {
+            axios.get("https://cpel.herokuapp.com/api/groups/").then((response) => {
+      response.data.forEach((groupe) => {
+        if (groupe._id === this.$cookies.get("group")) {
+          groupe.modules.forEach((grpM) => {
         axios
           .get("https://cpel.herokuapp.com/api/modules/")
           .then((response) => {
             response.data.forEach((mod) => {
+               if (grpM._id === mod._id) {
               if (mod._id === td.idModule) {
                 this.exoData.push({
                   module: mod.name,
@@ -121,48 +127,34 @@ export default {
                 });
                 console.log(this.exoData);
               }
+               }
             });
           });
-        axios
-          .get("https://cpel.herokuapp.com/api/exercises/")
-          .then((response) => {
-            response.data.forEach((exr) => {
-              if (exr.idTD === td._id) {
-                console.log(exr._id);
-
-                axios
-                  .get("https://cpel.herokuapp.com/api/corrections/")
-                  .then((response) => {
-                    response.data.forEach((corr) => {
-                      this.count = 0;
-
-                      if (exr._id === corr.idExercise) {
-                        if (!this.newSolution.includes(corr.correctionCode)) {
-                          this.newSolution.push({
-                            newSol: corr.correctionCode,
-                            solexercise: corr.idExercise,
-                          });
-                          this.count++;
-                        }
-                      }
-
-                      this.exoData.sort(
-                        (a, b) => new Date(a.date) - new Date(b.date)
-                      );
-                      console.log(this.exoData);
-                    });
-                  });
-              }
-            });
-          });
+   });
+        }
       });
     });
+
+      
+           
+      });
+    });
+       axios.get("https://cpel.herokuapp.com/api/groups/").then((response) => {
+      response.data.forEach((groupe) => {
+        if (groupe._id === this.$cookies.get("group")) {
+          groupe.modules.forEach((grpM) => {
     axios.get("https://cpel.herokuapp.com/api/modules/").then((response) => {
       response.data.forEach((mod) => {
+           if (grpM._id === mod._id) {
         this.modules.push({
           modid: mod._id,
           moduleName: mod.name,
         });
+           }
+      });
+    });
+    });
+        }
       });
     });
   },

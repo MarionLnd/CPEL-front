@@ -18,12 +18,12 @@
         <h3 class="title">Réponse</h3>
         <transition name="slide-fade">
           <div class="alert alert-success" v-if="updateMsg">
-            La solution a été modifié avec succès !
+            La solution a été modifiée avec succès !
           </div>
         </transition> 
           <transition name="slide-fade">
           <div class="alert alert-success" v-if="sendMsg">
-            La solution a été envoyé avec succès !
+            La solution a été envoyée avec succès !
           </div>
         </transition> 
          <transition name="slide-fade">
@@ -277,19 +277,19 @@ export default {
       }
     },
     activeSol() {
-      this.$notify({
-        group: "custom-style",
-        text: "Wrong password, please try again later",
-      });
+      console.log(this.exo)
       this.exo.forEach((data) => {
+        if(data.exoId === this.$route.params.id){
         if (data.codeSolution === document.getElementById("solution").value) {
           this.active = true;
           document.getElementById("sol").value = data.solution;
+          console.log("right")
         } else {
           this.active = false;
+          console.log("wrong")
           this.correction = true
         }
-        
+        }
       });
       
     },
@@ -341,7 +341,7 @@ export default {
 
             }
           });
-       //   this.notifMsg = false;
+    
         });
         
     },
@@ -371,6 +371,7 @@ export default {
                 this.exo.push({
                   codeSolution: corr.correctionCode,
                   solution: corr.content,
+                  exoId: ex.data._id
                 });
                 //  console.log(corr.correctionCode);
               }
@@ -378,8 +379,7 @@ export default {
           });
         axios.get("https://cpel.herokuapp.com/api/tds").then((response) => {
           response.data.forEach((td) => {
-            //  console.log(td._id);
-            // console.log(ex.data._id);
+       
             if (ex.data.idTD === td._id) {
               this.dateLimit = moment(String(td.dateLimit)).format(
                 "YYYY/MM/DD"
@@ -405,7 +405,6 @@ export default {
   },
   computed: {
     isDisabled: function () {
-      console.log("hi");
       return this.date > this.dateLimit;
     },
   },

@@ -129,15 +129,7 @@ export default {
           });
       });
     
-      this.message.sort((a, b) => {
-        if (Date.parse(a.date) > Date.parse(b.date)) {
-          return 1;
-        } else if (Date.parse(a.date) < Date.parse(b.date)) {
-          return -1;
-        } else {
-          return 0;
-        }
-      });
+   
 
       
     });
