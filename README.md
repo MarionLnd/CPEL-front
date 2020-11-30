@@ -17,6 +17,11 @@ npm install
 ```
 yarn serve
 ```
+ou
+```
+vue-cli-service serve
+```
+
 Vous pourrez, après le lancement de cette commande, lancer le projet depuis l'URL http://localhost:8080/login
 
 ### Les comptes à utiliser pour se connecter
