@@ -1,43 +1,39 @@
 <template>
   <div class="container">
     <Header />
-     <LeftMenu />
-     <h1> Exercices </h1>
-     <h3>A Rendre Avant {{  date | moment("DD/MM/YYYY") }}</h3>
-    <div class="course" >
-     
+    <LeftMenu />
+    <h1>Exercices</h1>
+    <h3>A Rendre Avant {{ date | moment("DD/MM/YYYY") }}</h3>
+    <div class="course">
       <div v-for="item in exoData" :key="item">
-       
         <div class="card">
-          
-         <p @click="setCookie(item.idexercise)" id="title">  {{ item.exercice }}    </p>
-            <br />
-         <p id="subtitle">{{ item.wording }} </p> 
+          <p @click="setCookie(item.idexercise)" id="title">
+            {{ item.exercice }}
+          </p>
+          <br />
+          <p id="subtitle">{{ item.wording }}</p>
         </div>
-        </div>
-    
+      </div>
     </div>
-   
   </div>
 </template>
 
 
 <style scoped>
-#first{
+#first {
   margin-top: 50px;
 }
-#title{
+#title {
   font-family: Georgia, serif;
   font-size: 19px;
   font-weight: bold;
-   cursor: pointer;
+  cursor: pointer;
 }
-#subtitle{
+#subtitle {
   font-size: 19px;
- 
 }
-h4{
-  color: #2F7777;
+h4 {
+  color: #2f7777;
 }
 h1 {
   font-family: Georgia, serif;
@@ -46,7 +42,7 @@ h1 {
   text-align: center;
   margin-left: 30%;
 }
-h3{
+h3 {
   margin-left: 30%;
 }
 
@@ -54,29 +50,24 @@ h3{
   width: 400px;
   height: 300px;
   background-color: #84a9ac;
-   margin-top: 50px;
- margin-left: 50%;
- 
-  
+  margin-top: 50px;
+  margin-left: 50%;
 }
 
-.course{
+.course {
   display: flex;
-   flex-wrap: wrap;
-   justify-content: space-around;
-   
- 
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .container {
-   
   margin-left: 0%;
 }
 #deconexion {
   position: absolute;
   bottom: 0px;
 }
-h4{
+h4 {
   color: black;
 }
 </style>
@@ -91,66 +82,46 @@ export default {
   name: "modules",
   components: {
     Header,
-   LeftMenu
- 
+    LeftMenu,
   },
   data() {
     return {
       exoData: [],
-      date: Date
+      date: Date,
     };
   },
   mounted() {
-  
-       
-        
-      
-    axios.get("https://cpel.herokuapp.com/api/exercises/").then((response) => {
-      response.data.forEach((exo) => {
-       
+    axios
+      .get("https://cpel.herokuapp.com/api/tds/" + this.$cookies.get("idTD"))
+      .then((td) => {
         axios
-          .get("https://cpel.herokuapp.com/api/tds/"+this.$cookies.get("idTD"))
-          .then((td) => {
-            console.log(exo)
-           // response.data.forEach((td) => {
-             if(exo.idTD === this.$cookies.get("idTD")){
-  
-           
-   
+          .get("https://cpel.herokuapp.com/api/exercises/")
+          .then((response) => {
+            response.data.forEach((exo) => {
+              console.log(exo);
+              // response.data.forEach((td) => {
+              if (exo.idTD === this.$cookies.get("idTD")) {
                 this.exoData.push({
                   td: td.data.name,
                   exercice: exo.name,
-                  idexercise:exo._id,
-                  wording:exo.wording,
-                 
+                  idexercise: exo._id,
+                  wording: exo.wording,
                 });
-                this.date= td.data.dateLimit
-                console.log(this.date)
-                console.log(this.exoData)
-            
-             }
-  
+                this.date = td.data.dateLimit;
+                console.log(this.date);
+                console.log(this.exoData);
+              }
             });
           });
-
-    });
- 
+      });
   },
-  methods : {
-   
-     setCookie(item){
-        
-       this.$cookies.set("idexercice",item);
-       console.log(this.$cookies.get("idexercice"));
-       this.$router.push("/exerciceContent/"+this.$cookies.get("idexercice"));
-     },
-     format_date(value){
-         if (value) {
-         //  return moment(String(value)).format('YYYY/MM/DD')
-          }
-      },
-   
-  }
-   
+  methods: {
+    setCookie(item) {
+      this.$cookies.set("idexercice", item);
+      console.log(this.$cookies.get("idexercice"));
+      this.$router.push("/exerciceContent/" + this.$cookies.get("idexercice"));
+    },
+  
+  },
 };
 </script>

@@ -2,25 +2,21 @@
   <div class="container">
     <Header />
 
-   <LeftMenu />
+    <LeftMenu />
     <h1>TDs</h1>
     <div class="course">
-
       <div v-for="mod in modules" :key="mod">
         <div class="card">
-          <p id="title"> {{ mod.moduleName }}</p>
-           
-        <div v-for="item in exoData" :key="item">
-        
-          <div  v-if="mod.modid === item.moduleId">
-            
-           <p @click="setCookie(item.idTD)"  id="subtitle">{{ item.td }}</p>
+          <p id="title">{{ mod.moduleName }}</p>
+
+          <div v-for="item in exoData" :key="item">
+            <div v-if="mod.modid === item.moduleId">
+              <p @click="setCookie(item.idTD)" id="subtitle">{{ item.td }}</p>
+            </div>
           </div>
         </div>
-          </div>
-          </div>     
+      </div>
     </div>
-  
   </div>
 </template>
 
@@ -106,64 +102,63 @@ export default {
   },
   mounted() {
    
-    axios.get("https://cpel.herokuapp.com/api/tds/").then((response) => {
+        axios.get("https://cpel.herokuapp.com/api/groups/").then((response) => {
+          response.data.forEach((groupe) => {
+            if (groupe._id === this.$cookies.get("group")) {
+              groupe.modules.forEach((grpM) => {
+                axios
+                  .get("https://cpel.herokuapp.com/api/modules/")
+                  .then((response) => {
+                    response.data.forEach((mod) => {
+                       axios.get("https://cpel.herokuapp.com/api/tds/").then((response) => {
       response.data.forEach((td) => {
-            axios.get("https://cpel.herokuapp.com/api/groups/").then((response) => {
-      response.data.forEach((groupe) => {
-        if (groupe._id === this.$cookies.get("group")) {
-          groupe.modules.forEach((grpM) => {
-        axios
-          .get("https://cpel.herokuapp.com/api/modules/")
-          .then((response) => {
-            response.data.forEach((mod) => {
-               if (grpM._id === mod._id) {
-              if (mod._id === td.idModule) {
-                this.exoData.push({
-                  module: mod.name,
-                  td: td.name,
-                  idTD: td._id,
-                  moduleId: mod._id,
-                  date: td.dateLimit,
-                });
-                console.log(this.exoData);
-              }
-               }
-            });
-          });
-   });
-        }
-      });
-    });
-
-      
-           
-      });
-    });
-       axios.get("https://cpel.herokuapp.com/api/groups/").then((response) => {
-      response.data.forEach((groupe) => {
-        if (groupe._id === this.$cookies.get("group")) {
-          groupe.modules.forEach((grpM) => {
-    axios.get("https://cpel.herokuapp.com/api/modules/").then((response) => {
-      response.data.forEach((mod) => {
-           if (grpM._id === mod._id) {
-        this.modules.push({
-          modid: mod._id,
-          moduleName: mod.name,
+                      if (grpM._id === mod._id) {
+                        if (mod._id === td.idModule) {
+                          this.exoData.push({
+                            module: mod.name,
+                            td: td.name,
+                            idTD: td._id,
+                            moduleId: mod._id,
+                            date: td.dateLimit,
+                          });
+                          console.log(this.exoData);
+                        }
+                      }
+                       });
         });
-           }
+                    });
+                  });
+              });
+            }
+         
       });
     });
-    });
+    axios.get("https://cpel.herokuapp.com/api/groups/").then((response) => {
+      response.data.forEach((groupe) => {
+        if (groupe._id === this.$cookies.get("group")) {
+          groupe.modules.forEach((grpM) => {
+            axios
+              .get("https://cpel.herokuapp.com/api/modules/")
+              .then((response) => {
+                response.data.forEach((mod) => {
+                  if (grpM._id === mod._id) {
+                    this.modules.push({
+                      modid: mod._id,
+                      moduleName: mod.name,
+                    });
+                  }
+                });
+              });
+          });
         }
       });
     });
   },
   methods: {
     setCookie(item) {
-     
       this.$cookies.set("idTD", item);
       console.log(this.$cookies.get("idTD"));
- 
+
       this.$router.push("/exercise");
     },
   },
