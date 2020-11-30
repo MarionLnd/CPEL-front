@@ -95,5 +95,4 @@ export default [
     {path: '/admin/professeur/:idProfessor', component: Dashboard },
     {path: '/admin/etudiant/:idStudent', component: Dashboard },
     {path: '/admin/groupe/:idGroup', component: Dashboard },
-    
 ]
