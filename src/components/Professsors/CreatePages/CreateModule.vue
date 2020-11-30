@@ -12,7 +12,7 @@
 
         <transition name="slide-fade">
             <div class="alert alert-danger alert-dismissible" v-if="formData.submitted && formData.error">
-                Une erreur est survenue lors de la création du module.. Réessayez !
+
             </div>
         </transition>
 
@@ -67,7 +67,8 @@ export default {
                 content: '',
                 groupSelected: {},
                 submitted: false,
-                error: false
+                error: false,
+                errorMessage: ''
             }
         }
     },
@@ -88,14 +89,24 @@ export default {
             console.log(moduleCreated)
             // Ajouter le nouveau module a la base
             axios.post("https://cpel.herokuapp.com/api/module/", moduleCreated)
-                .then(() => {
-                console.log("good")
-                    // redirect
-                    this.$router.push(this.$route.query.redirect || '/professeur')
+                .then(response => {
+                    let newModuleID = response.data.NewModule.replaceAll("201 => https://cpel.herokuapp.com/api/modules/", "")
+                    axios.put("https://cpel.herokuapp.com/api/groups/" + this.formData.groupSelected._id + "/modules/" + newModuleID)
+                        .then(response => {
+                            console.log(response)
+                            // redirect
+                            this.$router.push(this.$route.query.redirect || '/professeur')
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            this.formData.error = true
+                            this.formData.errorMessage = "Le groupe n'a pas été ajouté au module, ajoutez le groupe depuis la page de détail du module"
+                        })
                 })
                 .catch(error => {
                     console.log(error)
                     this.formData.error = true
+                    this.formData.errorMessage = "Une erreur est survenue lors de la création du module.. Réessayez !"
                 })
             this.formData.submitted = false
         },

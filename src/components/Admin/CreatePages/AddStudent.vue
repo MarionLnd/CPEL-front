@@ -93,9 +93,23 @@ export default {
                 console.log(studentCreated)
                 // Add student ot the base
                 axios.post("https://cpel.herokuapp.com/api/student/", studentCreated)
-                    .then(() => {
-                        this.formData.success = true
-                        this.$router.push("/admin/tableau-de-bord")
+                    .then(response => {
+                        let newStudentId = response.data.NewStudent.replaceAll("201 => https://cpel.herokuapp.com/api/professors/api/student/", "")
+                        if (studentCreated.idGroup !== "") {
+                            axios.put("https://cpel.herokuapp.com/api/groups/" + this.formData.groupSelected + "/students/" + newStudentId)
+                                .then(() => {
+                                    this.formData.success = true
+                                    this.$router.push("/admin/tableau-de-bord")
+                                })
+                                .catch(error => {
+                                    console.log(error)
+                                    this.formData.error = true
+                                    this.alertMessage = "L'ajout de l'étudiant dans le groupe a échoué"
+                                })
+                        } else {
+                            this.formData.success = true
+                            this.$router.push("/admin/tableau-de-bord")
+                        }
                     })
                     .catch(error => {
                         console.log(error)
