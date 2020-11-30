@@ -16,6 +16,21 @@
       </div>
       <div class="todo">
         <h3 class="title">Réponse</h3>
+        <transition name="slide-fade">
+          <div class="alert alert-success" v-if="updateMsg">
+            La solution a été modifié avec succès !
+          </div>
+        </transition> 
+          <transition name="slide-fade">
+          <div class="alert alert-success" v-if="sendMsg">
+            La solution a été envoyé avec succès !
+          </div>
+        </transition> 
+         <transition name="slide-fade">
+          <div class="alert alert-danger alert-dismissible" v-if="correction">
+            Mauvais Code ! Veuillez réessayer 
+          </div>
+        </transition> 
         <div class="embed-nav group">
           <nav class="nav nav-tabs" id="nt">
             <a
@@ -200,8 +215,6 @@ div.result {
   margin-left: 300px;
   width: 100px;
 }
-
-
 </style>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script> 
 <script src="http://www.skulpt.org/static/skulpt.min.js" type="text/javascript"></script> 
@@ -230,7 +243,9 @@ export default {
       disable: true,
       date: Date,
       dateLimit: Date,
-      notifMsg: String,
+      updateMsg: false,
+      correction:false,
+      sendMsg:false
     };
   },
   methods: {
@@ -262,20 +277,26 @@ export default {
       }
     },
     activeSol() {
-      this.$notify({ group: 'custom-style', text: 'Wrong password, please try again later' })
+      this.$notify({
+        group: "custom-style",
+        text: "Wrong password, please try again later",
+      });
       this.exo.forEach((data) => {
         if (data.codeSolution === document.getElementById("solution").value) {
           this.active = true;
           document.getElementById("sol").value = data.solution;
         } else {
           this.active = false;
+          this.correction = true
         }
+        
       });
+      
     },
 
     sendSolution() {
       console.log(this.$route.params);
-
+    
       axios
         .post("https://cpel.herokuapp.com/api/studentRendering/", {
           idStudent: this.$cookies.get("idStudent"),
@@ -285,10 +306,15 @@ export default {
         })
         .then(function (response) {
           console.log(response);
+         
         });
+        this.sendMsg = true;
     },
 
     updateSolution() {
+      
+       
+   
       axios
         .get(
           "https://cpel.herokuapp.com/api/students/" +
@@ -308,25 +334,25 @@ export default {
                 )
                 .then(function (response) {
                   console.log(response);
-                  this.notifMsg = "Votre modification a bien été enregistrer";
-                  this.$notify({
-                    group: "custom-style",
-               
-                    text:"Votre modification a bien été enregistrer"
+              
                     
-                    
-                  });
                 });
+                 this.updateMsg = true;
+
             }
           });
+       //   this.notifMsg = false;
         });
+        
     },
   },
 
   mounted() {
+    
     axios
       .get("https://cpel.herokuapp.com/api/exercises/" + this.$route.params.id)
       .then((ex) => {
+         
         console.log(ex.data._id);
         // console.log(this.$cookies.get("idexercice"));
         this.exo.push({
@@ -359,7 +385,6 @@ export default {
                 "YYYY/MM/DD"
               );
               this.date = moment(String(new Date())).format("YYYY/MM/DD");
-
             }
           });
         });
@@ -371,14 +396,11 @@ export default {
           )
           .then((response) => {
             response.data.forEach((renderings) => {
-            
-
               if (renderings.idExercise === ex.data._id) {
                 document.getElementById("yourcode").value = renderings.content;
               }
             });
           });
-      
       });
   },
   computed: {

@@ -133,6 +133,7 @@ export default {
                                     this.$cookies.set("idStudent", student._id);
                                     this.$cookies.set("username", user.data.userLogin.username);
                                     this.$cookies.set("type", user.data.userLogin.type);
+                                    this.$cookies.set("group", student.idGroup);
                                     console.log(this.$cookies.get("type"));
                                     console.log(this.$cookies.get("idStudent"));
                                 }

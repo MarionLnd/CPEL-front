@@ -9,14 +9,11 @@
         <router-link class="nav-link" to="/td"> TDs </router-link>
       </h4>
       <br />
-       <h4>
+      <h4>
         <router-link class="nav-link" to="/rendering"
-          >Exercices Rendu
+          >Exercices Envoyés
         </router-link>
       </h4>
-    
-    
-  
     </Sidebar>
   </div>
 </template>
@@ -46,12 +43,10 @@ export default {
   components: {
     ClosePoint,
     Sidebar,
-   
   },
- 
+
   data() {
     return {
-     // count: Number,
       newSolution: [],
     };
   },
@@ -62,15 +57,12 @@ export default {
           .get("https://cpel.herokuapp.com/api/corrections/")
           .then((response) => {
             response.data.forEach((corr) => {
-             // this.count = 0;
-
               if (exr._id === corr.idExercise) {
                 if (!this.newSolution.includes(corr.correctionCode)) {
                   this.newSolution.push({
                     newSol: corr.correctionCode,
                     solexercise: corr.idExercise,
                   });
-             //     this.count++;
                 }
               }
             });

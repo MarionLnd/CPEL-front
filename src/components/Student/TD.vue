@@ -117,7 +117,7 @@ export default {
                   td: td.name,
                   idTD: td._id,
                   moduleId: mod._id,
-                  date: td.createdAt,
+                  date: td.dateLimit,
                 });
                 console.log(this.exoData);
               }
@@ -159,11 +159,6 @@ export default {
     });
     axios.get("https://cpel.herokuapp.com/api/modules/").then((response) => {
       response.data.forEach((mod) => {
-       /* this.exoData.forEach((exo)=>{
-          if(exo.idModule === mod._id){
-            
-          }
-        })*/
         this.modules.push({
           modid: mod._id,
           moduleName: mod.name,
@@ -173,7 +168,7 @@ export default {
   },
   methods: {
     setCookie(item) {
-      // it sets the cookie called `username`
+     
       this.$cookies.set("idTD", item);
       console.log(this.$cookies.get("idTD"));
  
