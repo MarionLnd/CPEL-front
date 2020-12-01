@@ -13,44 +13,86 @@
           <p class="card-subtitle text-muted">{{ info.type }}</p>
         </div>
         <div class="card-body text-left">
-       
-           <form>
-                    <div class="form-group">
-                        <label for="lastname">Nom:</label>
-                        <input id="lastname" class="form-control" type="text" :placeholder="[[ info.lastName]]" disabled>
-                    </div>
+          <form>
+            <div class="form-group">
+              <label for="lastname">Nom:</label>
+              <input
+                id="lastname"
+                class="form-control"
+                type="text"
+                :placeholder="[[info.lastName]]"
+                disabled
+              />
+            </div>
 
-                    <div class="form-group">
-                        <label for="firstname">Prénom:</label>
-                        <input id="firstname" class="form-control" type="text" :placeholder="[[ info.firstName]]" disabled>
-                    </div>
-                     
-                     <div class="form-group">
-                        <label for="studentNumber">Numéro Etudiant:</label>
-                        <input id="studentNumber" class="form-control" type="text" :placeholder="[[ info.studentNumber]]" disabled>
-                    </div>
+            <div class="form-group">
+              <label for="firstname">Prénom:</label>
+              <input
+                id="firstname"
+                class="form-control"
+                type="text"
+                :placeholder="[[info.firstName]]"
+                disabled
+              />
+            </div>
 
-                     <div class="form-group">
-                        <label for="group">Groupe:</label>
-                        <input id="group" class="form-control" type="text" :placeholder="[[ info.group]]" disabled>
-                    </div>
+            <div class="form-group">
+              <label for="studentNumber">Numéro Etudiant:</label>
+              <input
+                id="studentNumber"
+                class="form-control"
+                type="text"
+                :placeholder="[[info.studentNumber]]"
+                disabled
+              />
+            </div>
 
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input id="email" class="form-control" type="text" :placeholder="[[ info.email]]" disabled>
-                    </div>
+            <div class="form-group">
+              <label for="group">Groupe:</label>
+              <input
+                id="group"
+                class="form-control"
+                type="text"
+                :placeholder="[[info.group]]"
+                disabled
+              />
+            </div>
 
-                     <div class="form-group">
-                        <label for="password">Mot de passe:</label>
-                        <input id="password" class="form-control" type="password" >
-                    </div>
-                     
-                      <div class="form-group">
-                        
-                        <button  class="form-control" type="password" @click="updatePassword(info.studentNumber)"> Modifier</button>
-                    </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input
+                id="email"
+                class="form-control"
+                type="text"
+                :placeholder="[[info.email]]"
+                disabled
+              />
+            </div>
+            <transition name="slide-fade">
+              <div class="alert alert-danger alert-dismissible" v-if="wrong">
+                Mauvais Code ! Veuillez réessayer
+              </div>
+            </transition>
+            <div class="form-group">
+              <label for="password">Mot de passe:</label>
+              <input id="password" class="form-control" type="password" />
+            </div>
 
-                </form>
+            <div class="form-group">
+              <label for="passwordconf">Confirmation du Mot de passe:</label>
+              <input id="passwordconf" class="form-control" type="password" />
+            </div>
+
+            <div class="form-group">
+              <button
+                class="form-control"
+                type="password"
+                @click="updatePassword(info.userId)"
+              >
+                Modifier
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -70,7 +112,7 @@
   font-weight: bold;
 }
 .card {
-    margin-left: 10%;
+  margin-left: 10%;
 }
 </style>
 <script>
@@ -80,19 +122,19 @@ import Header from "./Header";
 import LeftMenu from "./LeftMenu";
 export default {
   name: "Profile",
-  components:  {
+  components: {
     Header,
-  
-    LeftMenu
-   
+
+    LeftMenu,
   },
   data() {
     return {
       user: [],
+      wrong: false,
     };
   },
   mounted() {
-    console.log(this.$cookies.get("idStudent"));
+    //console.log(this.$cookies.get("idStudent"));
     if (this.$cookies.get("type") === "student") {
       axios
         .get(
@@ -100,10 +142,12 @@ export default {
             this.$cookies.get("idStudent")
         )
         .then((student) => {
-         console.log(student)
-          console.log("oups");
+          // console.log(student);
+
           axios
-            .get("https://cpel.herokuapp.com/api/groups/" + student.data.idGroup)
+            .get(
+              "https://cpel.herokuapp.com/api/groups/" + student.data.idGroup
+            )
             .then((group) => {
               this.user.push({
                 lastName: student.data.lastname,
@@ -111,33 +155,33 @@ export default {
                 studentNumber: student.data.studentNumber,
                 email: student.data.email,
                 username: this.$cookies.get("username"),
+                userId: this.$cookies.get("idUser"), 
                 group: group.data.name,
                 type: "Etudiant",
               });
-              console.log(this.user);
+              // console.log(this.user);
             });
         });
-    } 
+    }
   },
   methods: {
-    updatePassword(userID){
-     
-             axios
-        .put(
-          "https://cpel.herokuapp.com/api/user/"+userID,
-          {
-           
-          
-            content: document.getElementById("password").value,
-           
-          }
-        )
-        .then(function (response) {
-          console.log(response);
-         
-        });
-    }
-  }
+    updatePassword(userID) {
+      if (
+        document.getElementById("password").value ===
+        document.getElementById("passwordconf").value
+      ) {
+        axios
+          .put("https://cpel.herokuapp.com/api/users/" + userID, {
+            password: document.getElementById("password").value
+          })
+          .then(() => {
+            console.log("done");
+          });
+      } else {
+        this.wrong = true;
+      }
+    },
+  },
 };
 </script>
 
