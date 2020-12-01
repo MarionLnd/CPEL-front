@@ -101,36 +101,36 @@ export default {
     };
   },
   mounted() {
-   
-        axios.get("https://cpel.herokuapp.com/api/groups/").then((response) => {
-          response.data.forEach((groupe) => {
-            if (groupe._id === this.$cookies.get("group")) {
-              groupe.modules.forEach((grpM) => {
-                axios
-                  .get("https://cpel.herokuapp.com/api/modules/")
-                  .then((response) => {
-                    response.data.forEach((mod) => {
-                       axios.get("https://cpel.herokuapp.com/api/tds/").then((response) => {
-      response.data.forEach((td) => {
-                      if (grpM._id === mod._id) {
-                        if (mod._id === td.idModule) {
-                          this.exoData.push({
-                            module: mod.name,
-                            td: td.name,
-                            idTD: td._id,
-                            moduleId: mod._id,
-                            date: td.dateLimit,
-                          });
-                          console.log(this.exoData);
+    axios.get("https://cpel.herokuapp.com/api/groups/").then((response) => {
+      response.data.forEach((groupe) => {
+        if (groupe._id === this.$cookies.get("group")) {
+          groupe.modules.forEach((grpM) => {
+            axios
+              .get("https://cpel.herokuapp.com/api/modules/")
+              .then((response) => {
+                response.data.forEach((mod) => {
+                  axios
+                    .get("https://cpel.herokuapp.com/api/tds/")
+                    .then((response) => {
+                      response.data.forEach((td) => {
+                        if (grpM._id === mod._id) {
+                          if (mod._id === td.idModule) {
+                            this.exoData.push({
+                              module: mod.name,
+                              td: td.name,
+                              idTD: td._id,
+                              moduleId: mod._id,
+                              date: td.dateLimit,
+                            });
+                            console.log(this.exoData);
+                          }
                         }
-                      }
-                       });
-        });
+                      });
                     });
-                  });
+                });
               });
-            }
-         
+          });
+        }
       });
     });
     axios.get("https://cpel.herokuapp.com/api/groups/").then((response) => {
