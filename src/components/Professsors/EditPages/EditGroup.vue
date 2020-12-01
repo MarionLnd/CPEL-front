@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <Header />
         <h1 class="pt-3 pb-3">Éditer un groupe</h1>
         <form class="text-left">
             <div class="form-group">
@@ -39,9 +40,11 @@
 
 <script>
 import axios from 'axios';
+import Header from "@/components/Professsors/Header";
 
 export default {
     name: "EditGroup",
+    components: {Header},
     data() {
         return {
             id: this.$route.params.idGroup,

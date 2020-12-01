@@ -14,14 +14,14 @@
         <div class="card">
             <div class="card-header">
                 <div class="card-title">
-                    <h5 class="text-center clearfix">
+                    <h3 class="text-center clearfix">
                         {{ group.name }}
-                        <span class="float-right">
+                        <!--<span class="float-right">
                             <router-link :to="`/professeur/editer-groupe/${group._id}`">
                                 <font-awesome-icon class="text-left" icon="edit" size="lg" style="color: #333333"/>
                             </router-link>
-                        </span>
-                    </h5>
+                        </span>-->
+                    </h3>
                 </div>
             </div>
             <div class="card-body text-left">

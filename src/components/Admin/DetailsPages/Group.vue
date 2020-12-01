@@ -14,7 +14,7 @@
                 <p>Ce groupe est composé de {{ group.students.length }} étudiants : </p>
                 <ul v-for="(stud, key) in group.students" :key="key">
                     <li>
-                        <router-link :to="`/professeur/etudiant/${stud._id}?groupName=${group.name}`">
+                        <router-link :to="`/admin/etudiant/${stud._id}`">
                             [{{ stud.studentNumber }}] - {{ stud.firstname }} {{ stud.lastname }}
                         </router-link>
                     </li>
@@ -88,10 +88,10 @@
         methods: {
             addStudentToGroup(){
                 this.submitted = true
-                axios.put("https://cpel.herokuapp.com/api/groups/" + this.id + "/students/" + this.studentSelected._id)
+                axios.put("https://cpel.herokuapp.com/api/groups/" + this.idGroup + "/students/" + this.studentSelected._id)
                     .then(response => {
                         console.log(response)
-                        axios.put("https://cpel.herokuapp.com/api/students/group/" + this.studentSelected._id, {idGroup: this.id})
+                        axios.put("https://cpel.herokuapp.com/api/students/group/" + this.studentSelected._id, {idGroup: this.idGroup})
                             .then(responsePUT => {
                                 console.log(responsePUT)
                                 this.alertMessage = "L'ajout du nouvel étudiant a été fait avec succès"

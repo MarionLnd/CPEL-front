@@ -17,10 +17,10 @@
                     <router-link class="mr-2" :to="`/professeur/groupe/${group._id}`">
                         <font-awesome-icon icon="eye" size="lg"/>
                     </router-link>
-                    -
+                    <!---
                     <router-link class="ml-2" :to="`/professeur/editer-groupe/${group._id}`">
                         <font-awesome-icon icon="edit" size="lg"/>
-                    </router-link>
+                    </router-link>-->
                 </td>
             </tr>
             </tbody>

@@ -88,7 +88,7 @@
                 }
             },
             validatePassword(password) {
-                if (password.length <= 8) {
+                if (password.length < 8) {
                     this.hasWarning = true
                     this.alertMessage = "Votre mot de passe doit comporter plus de 8 caractères."
                     return false

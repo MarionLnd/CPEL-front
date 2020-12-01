@@ -114,7 +114,7 @@
                             axios.put("https://cpel.herokuapp.com/api/exercises/" + exo._id, updatedExo)
                                 .then(responsePUT2 => {
                                     console.log(responsePUT2)
-                                    this.alertMessage = "Une erreur est survenue lors de la création du TD.. Réessayez !"
+                                    this.alertMessage = "Le TD a été crée avec succés"
                                 })
                                 .catch(error => {
                                     console.log(error)

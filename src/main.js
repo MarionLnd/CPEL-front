@@ -24,6 +24,7 @@ import 'skulpt/dist/skulpt-stdlib';
 import VueFilterDateFormat from '@vuejs-community/vue-filter-date-format';
 import Notifications from 'vue-notification';
 import VueMoment from "vue-moment";
+//import ClickConfirm from "click-confirm";
 
 Vue.config.productionTip = false
 

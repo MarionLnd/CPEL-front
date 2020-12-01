@@ -22,7 +22,7 @@
                     <label class="text-left" for="exercise">Pour l'exercice :</label>
                     <select id="exercise" class="custom-select" v-model="formData.selectedExercise" required>
                         <option
-                            v-for="exercise in getProfExercises"
+                            v-for="exercise in formData.exercises"
                             :key="exercise.idExercise"
                             :value="exercise">
                             Exercice : {{ exercise.name }}
@@ -83,7 +83,7 @@
                       console.log(td)
                       for (let exo of td.exercises) {
                           if (!this.idExercisesCorrected.includes(exo._id)) {
-                              profExercises.push(exo)
+                              this.exercisesProf.push(exo)
                           }
                       }
                   }
@@ -114,6 +114,15 @@
 
             axios.get("https://cpel.herokuapp.com/api/professors/" + this.id + "/modules").then(response => {
                 this.modulesProf = response.data
+            })
+
+            axios.get("https://cpel.herokuapp.com/api/exercises/").then(response => {
+                for(let exercise of response.data) {
+                    if (exercise.idTD === undefined) {
+                        this.formData.exercises.push(exercise)
+                    }
+                }
+
             })
         },
         methods: {
